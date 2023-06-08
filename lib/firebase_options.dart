@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,41 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCEcHqPZkuVz4AuqDbnHEJ7JR-Rz9pbINw',
-    appId: '1:736169239223:web:7392c52d97c5ff32e96332',
-    messagingSenderId: '736169239223',
-    projectId: 'studentacr-4af49',
-    authDomain: 'studentacr-4af49.firebaseapp.com',
-    storageBucket: 'studentacr-4af49.appspot.com',
-    measurementId: 'G-93HN85B2VE',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyApfPRljfEUDX95zXyUNlyeLotq01KSAjc',
     appId: '1:736169239223:android:02f4b7d1ccdf8f8ce96332',
     messagingSenderId: '736169239223',
     projectId: 'studentacr-4af49',
     storageBucket: 'studentacr-4af49.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyADhILNCmn-6rqlD3c1K0dKxFGxFPG2adE',
-    appId: '1:736169239223:ios:82920d78c81ffdbde96332',
-    messagingSenderId: '736169239223',
-    projectId: 'studentacr-4af49',
-    storageBucket: 'studentacr-4af49.appspot.com',
-    iosClientId: '736169239223-shaqfb9obevohoq1dfrdmsqv27b7rlvl.apps.googleusercontent.com',
-    iosBundleId: 'com.example.student',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyADhILNCmn-6rqlD3c1K0dKxFGxFPG2adE',
-    appId: '1:736169239223:ios:0f7bc071503c1c42e96332',
-    messagingSenderId: '736169239223',
-    projectId: 'studentacr-4af49',
-    storageBucket: 'studentacr-4af49.appspot.com',
-    iosClientId: '736169239223-hhpjamt2bsp673b2c9ta0epm2g6fmmcm.apps.googleusercontent.com',
-    iosBundleId: 'com.example.student.RunnerTests',
   );
 }

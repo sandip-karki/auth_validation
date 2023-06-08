@@ -6,6 +6,6 @@ abstract class Authrepo {
   Future register({
     required String email,
     required String password,
-    required String confpassword,
+    required String name,
   });
 }

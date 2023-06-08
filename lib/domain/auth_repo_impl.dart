@@ -16,10 +16,10 @@ class AuthRepoImpl extends Authrepo {
   }
 
   @override
-  Future register(
+  Future<UserCredential> register(
       {required String email,
       required String password,
-      required String confpassword}) async {
+      required String name}) async {
     final res = await _firebaseAuth!
         .createUserWithEmailAndPassword(email: email, password: password);
     return res;

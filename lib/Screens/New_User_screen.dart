@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:student/Screens/Login._Screen.dart';
+
+import '../domain/helpers/auth_helper.dart';
+import '../provider/auth_provider.dart';
 
 class Newuser extends StatelessWidget {
   Newuser({super.key});
   final emailCtrl = TextEditingController();
   final passCtrl = TextEditingController();
-  final confPassCtrl = TextEditingController();
+  final nameCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +83,11 @@ class Newuser extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: TextField(
-                        controller: passCtrl,
+                        controller: nameCtrl,
                         decoration: InputDecoration(
                             border:
                                 OutlineInputBorder(borderSide: BorderSide.none),
-                            hintText: 'Password',
+                            hintText: 'Full name',
                             hintStyle:
                                 TextStyle(color: Colors.black, fontSize: 20)),
                       ),
@@ -103,11 +107,11 @@ class Newuser extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: TextField(
-                        controller: confPassCtrl,
+                        controller: passCtrl,
                         decoration: InputDecoration(
                             border:
                                 OutlineInputBorder(borderSide: BorderSide.none),
-                            hintText: 'confirm password',
+                            hintText: 'Password',
                             hintStyle:
                                 TextStyle(color: Colors.black, fontSize: 20)),
                       ),
@@ -125,17 +129,34 @@ class Newuser extends StatelessWidget {
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(20)),
                   child: InkWell(
-                    child: Text(
-                      'Register',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
-                    },
-                  ),
+                      child: Text(
+                        'Register',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onTap: () async {
+                        String email = emailCtrl.text.trim();
+                        String pass = passCtrl.text.trim();
+                        String name = nameCtrl.text.trim();
+                        if (Registerhelper.checkUserInputs(
+                            email: email, password: pass, name: name)) {
+                          final res = await context
+                              .read<AuthProvider>()
+                              .register(
+                                  email: email, password: pass, name: name);
+                          if (res == 'ok') {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(res.toString())));
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Email or Password is empty')));
+                        }
+                      }),
                   alignment: Alignment.center,
                 ),
                 SizedBox(
@@ -156,7 +177,7 @@ class Newuser extends StatelessWidget {
                           style: TextStyle(fontSize: 20, color: Colors.blue),
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => LoginScreen()));

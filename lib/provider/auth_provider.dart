@@ -31,14 +31,15 @@ class AuthProvider with ChangeNotifier {
   Future<String> register(
       {required String email,
       required String password,
-      required String confpassword}) async {
+      required String name}) async {
     _isLoading = true;
     _loadingText = 'Creating user..';
+
     notifyListeners();
     String result = 'ok';
     try {
-      final res = await _repo!.register(
-          email: email, password: password, confpassword: confpassword);
+      final res =
+          await _repo!.register(email: email, password: password, name: name);
       print(res);
     } catch (e) {
       result = e.toString();

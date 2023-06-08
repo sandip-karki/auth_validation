@@ -7,3 +7,13 @@ class Authhelper {
     return true;
   }
 }
+
+class Registerhelper {
+  static bool checkUserInputs(
+      {required String email, required String password, required String name}) {
+    if (email.isEmpty || password.isEmpty || name.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+}
